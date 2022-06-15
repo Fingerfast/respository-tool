@@ -9,7 +9,7 @@ import useIssues, { Issue } from './api/useIssues'
 import useRepos from './api/useRepos'
 
 // PERSONAL TOKEN
-export const personalGithubToken = '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'
+export const personalGithubToken = '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'
 
 const Home: NextPage = () => {
   const [searchText, setSearchText] = useState('')

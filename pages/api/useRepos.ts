@@ -27,6 +27,8 @@ type ResponseRepository = {
 export default function useRepos() {
     const [repositories, setRepositories] = useState<Repository[]>([])
     const getReposByFullName = useCallback((repositoryFullName: string) => {
+        console.log('AUTH' , personalGithubToken);
+        
         const octokit = new Octokit({
             auth: personalGithubToken
         })

@@ -1,12 +1,6 @@
 {
-  "/_app": "pages/_app.js",
-  "/api/useRepos": "pages/api/useRepos.js",
-  "/components/Input/Input": "pages/components/Input/Input.html",
-  "/containers/Issues/Issues": "pages/containers/Issues/Issues.html",
-  "/api/useIssues": "pages/api/useIssues.js",
-  "/containers/Repositories/Repositories": "pages/containers/Repositories/Repositories.html",
-  "/": "pages/index.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/_app": "pages/_app.js",
+  "/": "pages/index.js"
 }
