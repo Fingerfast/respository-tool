@@ -52,7 +52,7 @@ const Home: NextPage = () => {
             ? <p>For show repositories, start typing in search input.</p>
             : <>
                 <Respositories {...{repositories}} handleShowIssues={clickOnShowIssues}/>
-                  {issues.length > 0 && 
+                  {issues && issues.length > 0 && 
                     <Issues title={issuesRepositoryName} {...{issues}}/>
                   }
             </>
