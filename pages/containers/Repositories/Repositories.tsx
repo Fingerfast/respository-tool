@@ -1,8 +1,8 @@
-import { Repository } from '../../useRepos'
+import { Repository } from '../../api/useRepos'
 import styles from '../../../styles/Repositories.module.css'
 
 type RepositoriesProps = {
-    repositories: Repository[]
+    repositories?: Repository[]
     handleShowIssues?: (repoName: string) => void
 }
 
@@ -12,7 +12,7 @@ const Respositories = (props: RepositoriesProps) => {
     return (
         <div className={styles.card}>
             <div className={styles.row}><h1 className={styles.title}>Repositories</h1></div>
-            {repositories.length > 0 ? 
+            {repositories && repositories?.length > 0 ? 
                 repositories.map((repository, i) => <RepositoryItem key={i} {...repository} {...props}/>) :
                 <div className={styles.loader}></div>
             }

@@ -1,10 +1,10 @@
-import useRepos, { Repository } from '../../useRepos'
+import useRepos, { Repository } from '../../api/useRepos'
 import styles from '../../../styles/Repositories.module.css'
-import { Issue } from '../../useIssues'
+import { Issue } from '../../api/useIssues'
 
 type IssuesProps = {
     title: string
-    issues: Issue[]
+    issues?: Issue[]
 }
 
 const Issues = (props: IssuesProps) => {
@@ -13,8 +13,8 @@ const Issues = (props: IssuesProps) => {
     return (
         <div className={styles.card}>
             <div className={styles.row}><h1 className={styles.title}>{`${props.title} Issues`}</h1></div>
-            {issues.length > 0 ? 
-                issues.map((issue, i) => <IssueItem key={i} {...issue} {...props}/>) :
+            {issues && issues?.length > 0 ? 
+                issues?.map((issue, i) => <IssueItem key={i} {...issue} {...props}/>) :
                 <div className={styles.loader}></div>
             }
         </div>

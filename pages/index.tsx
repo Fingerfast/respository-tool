@@ -5,8 +5,8 @@ import styles from '../styles/Repositories.module.css'
 import Input from './components/Input/Input'
 import Issues from './containers/Issues/Issues'
 import Respositories from './containers/Repositories/Repositories'
-import useIssues, { Issue } from './useIssues'
-import useRepos from './useRepos'
+import useIssues, { Issue } from './api/useIssues'
+import useRepos from './api/useRepos'
 
 // PERSONAL TOKEN
 export const personalGithubToken = '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'
@@ -52,7 +52,7 @@ const Home: NextPage = () => {
             ? <p>For show repositories, start typing in search input.</p>
             : <>
                 <Respositories {...{repositories}} handleShowIssues={clickOnShowIssues}/>
-                  {issues && issues.length > 0 && 
+                  {issues?.length > 0 && 
                     <Issues title={issuesRepositoryName} {...{issues}}/>
                   }
             </>
