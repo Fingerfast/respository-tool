@@ -1,51 +1,48 @@
-import { Repository } from '../../api/useRepos'
-import styles from '../../../styles/Repositories.module.css'
+import { useCallback, useState, useMemo, useEffect } from 'react'
+import styles from './Repositories.module.css'
+import Input from '../../components/Input/Input'
+import Issues from '../IssuesList/IssuesList'
+import _debounce from 'lodash.debounce'
+import useRepos from '../../hooks/useRepos'
+import useIssues from '../../hooks/useIssues'
+import RespositoriesList from '../RepositoriesList/RepositoriesList'
 
-type RepositoriesProps = {
-    repositories?: Repository[]
-    handleShowIssues?: (repoName: string) => void
-}
+const Respositories = () => {
+    const [searchText, setSearchText] = useState('')
+    const {repositories, loading: loadingRepositories, error: errorRepositories, getReposByFullName} = useRepos()
+    const {issues, getIssuesByRepo} = useIssues()
+    const [issuesRepositoryName, setIssuesRepositoryName] = useState('')
 
-const Respositories = (props: RepositoriesProps) => {
-    const {repositories} = props
+	const debounceSearch = useCallback(_debounce((value) => getReposByFullName(value), 500), []);
+
+    const onSearch = ((value: string) => {
+		setSearchText(value)
+		value !== '' && debounceSearch(value)
+    })
+  
+    const clickOnShowIssues = useCallback((repoName: string) => {
+		getIssuesByRepo(repoName)
+		setIssuesRepositoryName(repoName)
+    }, [getIssuesByRepo, setIssuesRepositoryName])
 
     return (
-        <div className={styles.card}>
-            <div className={styles.row}><h1 className={styles.title}>Repositories</h1></div>
-            {repositories && repositories?.length > 0 ? 
-                repositories.map((repository, i) => <RepositoryItem key={i} {...repository} {...props}/>) :
-                <div className={styles.loader}></div>
-            }
-        </div>
-        )
-    }
-
-const RepositoryItem = (props: Repository & RepositoriesProps ) => {
-    return (
-        <div className={styles.row}>
-            <div className={styles.infoPanel}>
-                <div>
-                    <a href={props.owner?.htmlUrl} target={'_blank'} className={styles.link} rel="noreferrer">{props.fullName?.split('/')[0]}</a>
-                    <span> / </span>
-                    <a href={props.htmlUrl} target={'_blank'} className={styles.link} rel="noreferrer">{props.fullName?.split('/')[1]}</a>
-                </div>
-                <div className={styles.description}>
-                    {props.description}
-                </div>
-                <div className={styles.branchName}>
-                    {`Default branch: ${props.defaultBranch}`}
-                </div>
-            </div>
-            {props.openIssuesCount && props.openIssuesCount > 0 
-                ?
-                    <div className={styles.showIssues} onClick={() => props.handleShowIssues?.(props.fullName || '')}>
-                        <a className={styles.issuesLink}>Show issues</a>
-                    </div>
-                : 
-                    null
-            }
-        </div>
-    )
-}
+		<div className={styles.wrapper}>
+			<div className="grid">
+				<Input handleSearchInput={onSearch} value={searchText}/>
+        	</div>
+			<div className="grid">
+				{searchText === '' 
+					? <p>For show repositories, start typing in search input.</p>
+					: <>
+						<RespositoriesList {...{repositories, loadingRepositories, errorRepositories}} handleShowIssues={clickOnShowIssues}/>
+							{issues?.length > 0 && 
+								<Issues title={issuesRepositoryName} {...{issues, styles}}/>
+							}
+					</>
+				}
+			</div>
+		</div>
+      )
+  }
 
 export default Respositories
