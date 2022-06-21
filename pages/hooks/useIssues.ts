@@ -2,7 +2,7 @@ import { Octokit } from 'octokit'
 import { useCallback, useState } from 'react'
 import { RequestError } from '@octokit/types'
 
-export type Issue = {
+type Issue = {
 	title: string
 	body?: string
 }

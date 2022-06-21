@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import styles from './Repositories.module.css'
 import Input from '../../components/Input/Input'
 import Issues from '../IssuesList/IssuesList'
@@ -13,7 +13,7 @@ const Respositories = () => {
     const {issues, getIssuesByRepo} = useIssues()
     const [issuesRepositoryName, setIssuesRepositoryName] = useState('')
 
-	const debounceSearch = useCallback(_debounce((value) => getReposByFullName(value), 500), []);
+	const debounceSearch = useCallback(_debounce((value) => getReposByFullName(value), 1000), []);
 
     const onSearch = ((value: string) => {
 		setSearchText(value)
@@ -35,9 +35,9 @@ const Respositories = () => {
 					? <p>For show repositories, start typing in search input.</p>
 					: <>
 						<RespositoriesList {...{repositories, loadingRepositories, errorRepositories}} handleShowIssues={clickOnShowIssues}/>
-							{issues?.length > 0 && 
-								<Issues title={issuesRepositoryName} {...{issues, styles}}/>
-							}
+						{issues?.length > 0 && !loadingRepositories &&
+							<Issues title={issuesRepositoryName} {...{issues, styles}}/>
+						}
 					</>
 				}
 			</div>

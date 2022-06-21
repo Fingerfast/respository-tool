@@ -1,5 +1,9 @@
-import { Issue } from '../../hooks/useIssues'
-import styles from '../Repositories/Repositories.module.css'
+import styles from './IssuesList.module.css'
+
+type Issue = {
+	title: string
+	body?: string
+}
 
 type IssuesProps = {
 	title: string
@@ -12,10 +16,7 @@ const IssuesList = (props: IssuesProps) => {
 	return (
 		<div className={'card'}>
 			<div className={'row'}><h1 className={styles.title}>{`${title} Issues`}</h1></div>
-			{issues && issues?.length > 0 ? 
-				issues?.map((issue, i) => <IssueItem key={i} {...issue} {...props}/>) :
-				<div className={styles.loader}></div>
-			}
+			{issues && issues?.length > 0 && issues?.map((issue, i) => <IssueItem key={i} {...issue} {...props}/>)}
 		</div>
 		)
 	}
@@ -28,9 +29,9 @@ const IssueItem = (props: Issue ) => {
 				<div className={styles.bold}>
 					{title}
 				</div>
-				<div className={styles.description}>
+				<p className={styles.description}>
 					{body}
-				</div>
+				</p>
 			</div>
 		</div>
 	)

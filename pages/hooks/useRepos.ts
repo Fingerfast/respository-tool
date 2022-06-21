@@ -1,16 +1,15 @@
 import { Octokit } from 'octokit'
 import { useCallback, useState } from 'react'
-import { Repository } from '../types/Repositories'
 import { RequestError } from '@octokit/types'
 
-export type ResponseRepository = {
-	full_name: string
+type Repository = {
+	fullName: string
 	description?: string
-	open_issues_count?: number
-	default_branch?: string
-	html_url?: string
+	openIssuesCount?: number
+	defaultBranch?: string
+	htmlUrl?: string 
 	owner?: {
-		html_url: string
+		htmlUrl: string
 	}
 }
 
@@ -19,9 +18,8 @@ export default function useRepos() {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<RequestError>()
 	
+	
 	const getReposByFullName = useCallback((repositoryFullName: string) => {
-		console.log('REPOOO,' , repositoryFullName);
-		
 		const octokit = new Octokit({
 			auth: process.env.PERSONAL_TOKEN
 		})
@@ -29,7 +27,7 @@ export default function useRepos() {
 			setLoading(true)
 			try {
 				const result = await (await octokit.request(`GET /search/repositories`, {q: `${repositoryFullName}`})).data
-				const normalizedRepositories: Repository[] = result.items.map((repository: any) => {
+				const normalizedRepositories = result.items.map((repository) => {
 					return {
 						fullName: repository.full_name,
 						description: repository.description,
@@ -41,7 +39,7 @@ export default function useRepos() {
 						}
 					}
 				})
-				setRepositories(normalizedRepositories)
+				setRepositories(normalizedRepositories as Repository[])
 			} catch (error) {
 				setError(error as RequestError)
 			} finally {
