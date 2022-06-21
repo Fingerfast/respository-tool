@@ -28,7 +28,7 @@ const RespositoriesList = (props: RepositoriesProps) => {
                 <h1 className={styles.title}>Repositories</h1>
             </div>
             {!loadingRepositories && errorRepositories && !repositories && <div className={styles.infoPanel}>Při načítání došlo k chybě</div>}
-            {!loadingRepositories && !errorRepositories && repositories.length === 0 && <div className={styles.infoPanel}>Pro zadaný výraz nebyly nalezeny žádné záznamy</div>}
+            {!loadingRepositories && !errorRepositories && repositories && repositories.length === 0 && <div className={styles.infoPanel}>Pro zadaný výraz nebyly nalezeny žádné záznamy</div>}
             {loadingRepositories && <div className={styles.loader}></div>}
             {repositories && !loadingRepositories && repositories.map((repository, i) => <RepositoryListItem key={i} {...repository} {...props}/>)}
         </div>
