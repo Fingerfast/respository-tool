@@ -1,16 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+In app can:
+* Search repositories by fulltext input
+* Show repositories with ther potencional issues
+* Show Issues in side panel with description
 
-## Getting Started
+## Repository tool
 
-First, run the development server:
+1. you need to generate access on github.com for repo scope:
+- public_repo
 
+2. Put personal token to your local file .env
+```bash
+PERSONAL_TOKEN="your_token"
+```
+or run 
+```bash
+vercel env pull
+```
+for generate .env from vercel CI
+
+3. Install node modules with:
+```bash
+npm install
+```
+
+4. For start application run one of these:
 ```bash
 npm run dev
 # or
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## APP using
+* CSS modules
+* [React 18.1 Hooks](https://reactjs.org/docs/hooks-intro.html)
+* [Typescript](https://www.typescriptlang.org/)
+
+## API using
+* [Github REST API](https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api)
+
+
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
